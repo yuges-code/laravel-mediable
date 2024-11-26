@@ -1,12 +1,13 @@
 <?php
 
+use Yuges\Mediable\Models\Media;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    protected string $table = 'media';
+    protected string $table = 'mediables';
 
     public function up(): void
     {
@@ -17,19 +18,14 @@ return new class extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->ulid('id')->primary();
 
-            $table->string('disk', 32);
-            $table->string('directory');
-            $table->string('filename');
-            $table->string('extension', 32);
-            $table->string('mime', 128);
-            $table->unsignedBigInteger('size');
-            $table->json('manipulations');
-            $table->json('properties');
+            $table->foreignIdFor(Media::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->ulidMorphs('mediable');
+            $table->string('collection')->index();
+            $table->unsignedBigInteger('order')->index();
 
-            $table->unique(['disk', 'directory', 'filename', 'extension']);
+            $table->unique(['media_id', 'mediable_type', 'mediable_id', 'collection']);
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

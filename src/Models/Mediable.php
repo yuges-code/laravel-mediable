@@ -2,28 +2,26 @@
 
 namespace Yuges\Mediable\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Yuges\Mediable\Observers\MediableObserver;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
 /**
  * @property string $id
  * @property-read ?\Illuminate\Support\Carbon $created_at
  * @property-read ?\Illuminate\Support\Carbon $updated_at
  */
-class Media extends Model
+class Mediable extends MorphPivot
 {
     use HasUlids, HasFactory;
 
-    protected $table = 'media';
+    public $table = 'mediables';
 
     protected $guarded = ['id'];
 
-    public static function boot()
+    public function mediable(): MorphTo
     {
-        parent::boot();
-
-        static::observe(MediableObserver::class);
+        return $this->morphTo();
     }
 }
