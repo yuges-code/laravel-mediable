@@ -1,0 +1,24 @@
+{
+    "name": "yuges-code/laravel-mediable",
+    "description": "Package for easily uploading and attaching media files to Laravel eloquent models",
+    "license": "MIT",
+    "keywords": [
+        "yuges",
+        "laravel-mediable"
+    ],
+    "authors": [
+        {
+            "name": "Georgy",
+            "email": "goshasafonov@yandex.ru"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yuges\\Mediable\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
