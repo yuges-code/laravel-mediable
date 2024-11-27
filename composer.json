@@ -24,7 +24,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Yuges\\Mediable\\MediableServiceProvider"
+                "Yuges\\Mediable\\Providers\\MediableServiceProvider"
             ]
         }
     }

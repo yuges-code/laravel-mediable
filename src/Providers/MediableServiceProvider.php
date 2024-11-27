@@ -9,11 +9,11 @@ class MediableServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/mediable.php' => config_path('mediable.php')
+            __DIR__.'/../../config/mediable.php' => config_path('mediable.php')
         ], 'mediable-config');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations')
+            __DIR__.'/../../database/migrations/' => database_path('migrations')
         ], 'mediable-migrations');
     }
 }
