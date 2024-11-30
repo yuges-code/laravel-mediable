@@ -9,6 +9,7 @@ class MediableObserver
     public function creating(Media $model): void
     {
         
+        dd($model);
     }
 
     public function updating(Media $model): void

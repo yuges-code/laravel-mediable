@@ -15,4 +15,22 @@ return [
      * The maximum file size in bytes for a single uploaded file.
      */
     'max_file_size' => 1024 * 1024 * 10, // 10MB
+
+    /*
+     * Generators.
+     */
+    'generators' => [
+        'url' => [
+            'default' => Yuges\Mediable\Generators\Url\DefaultUrlGenerator::class,
+            'custom' => [
+                // generators
+            ],
+        ],
+        'path' => [
+            'default' => Yuges\Mediable\Generators\Path\DefaultPathGenerator::class,
+            'custom' => [
+                // generators
+            ],
+        ],
+    ],
 ];
