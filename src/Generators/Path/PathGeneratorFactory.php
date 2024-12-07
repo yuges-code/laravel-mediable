@@ -4,7 +4,7 @@ namespace Yuges\Mediable\Generators\Path;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidPathGenerator;
+use Yuges\Mediable\Generators\Exceptions\InvalidPathGenerator;
 
 class PathGeneratorFactory
 {
@@ -21,11 +21,11 @@ class PathGeneratorFactory
     {
         $defaultPathGeneratorClass = config('mediable.generators.path.default');
 
-        foreach (config('media-library.custom_path_generators', []) as $modelClass => $customPathGeneratorClass) {
-            if (static::mediaBelongToModelClass($media, $modelClass)) {
-                return $customPathGeneratorClass;
-            }
-        }
+        // foreach (config('media-library.custom_path_generators', []) as $modelClass => $customPathGeneratorClass) {
+        //     if (static::mediaBelongToModelClass($media, $modelClass)) {
+        //         return $customPathGeneratorClass;
+        //     }
+        // }
 
         return $defaultPathGeneratorClass;
     }
