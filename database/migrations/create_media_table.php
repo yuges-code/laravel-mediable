@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('extension', 32);
             $table->string('mime', 128);
             $table->unsignedBigInteger('size');
-            $table->json('manipulations');
-            $table->json('properties');
+            $table->json('manipulations')->nullable();
+            $table->json('properties')->nullable();
 
             $table->unique(['disk', 'directory', 'filename', 'extension']);
 

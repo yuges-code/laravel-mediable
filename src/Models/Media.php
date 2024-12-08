@@ -18,6 +18,8 @@ use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
  * @property string $extension
  * @property string $mime
  * @property integer $size
+ * @property array $manipulations
+ * @property array $properties
  * 
  * @property-read ?\Illuminate\Support\Carbon $created_at
  * @property-read ?\Illuminate\Support\Carbon $updated_at
@@ -29,6 +31,14 @@ class Media extends Model
     protected $table = 'media';
 
     protected $guarded = ['id'];
+
+    protected function casts(): array
+    {
+        return [
+            'properties' => 'array',
+            'manipulations' => 'array',
+        ];
+    }
 
     public static function boot()
     {

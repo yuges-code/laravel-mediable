@@ -19,7 +19,7 @@ return new class extends Migration
             $table->ulid('id')->primary();
 
             $table->foreignIdFor(Media::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->ulidMorphs('mediable');
+            $table->morphs('mediable');
             $table->string('collection')->index();
             $table->unsignedBigInteger('order')->index();
 

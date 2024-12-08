@@ -46,13 +46,14 @@ class FileManager
         $media->manipulations;
         $media->properties;
 
+        $media->save();
+
+        $this->model->attachMedia($media);
+
         Storage::disk($media->disk)->put(
             $media->getPathname(),
             $this->file
         );
-
-        $media->save();
-        
 
         return $media;
     }

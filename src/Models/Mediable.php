@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
 /**
  * @property string $id
+ * 
  * @property-read ?\Illuminate\Support\Carbon $created_at
  * @property-read ?\Illuminate\Support\Carbon $updated_at
  */
