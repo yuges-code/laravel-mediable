@@ -2,9 +2,17 @@
 
 namespace Yuges\Mediable\Generators\Url;
 
-use Yuges\Mediable\Models\Media;
-
-class DefaultUrlGenerator
+class DefaultUrlGenerator extends AbstractUrlGenerator
 {
-    
+    public function getUrl(): string
+    {
+        $url = $this->getDisk()->url($this->getPath());
+
+        return $url;
+    }
+
+    public function getPath(): string
+    {
+        return $this->pathGenerator->getPath($this->media);
+    }
 }

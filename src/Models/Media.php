@@ -2,13 +2,14 @@
 
 namespace Yuges\Mediable\Models;
 
+use Yuges\Mediable\Traits\HasUrl;
+use Yuges\Mediable\Traits\HasPath;
 use Illuminate\Database\Eloquent\Model;
 use Yuges\Mediable\Observers\MediableObserver;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
 
 /**
  * @property string $id
@@ -26,7 +27,7 @@ use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
  */
 class Media extends Model
 {
-    use HasUlids, HasFactory;
+    use HasUlids, HasFactory, HasPath, HasUrl;
 
     protected $table = 'media';
 
@@ -57,17 +58,5 @@ class Media extends Model
         $this->extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
         $this->mime = $file->getMimeType();
         $this->size = $file->getSize();
-    }
-
-    public function getPath(): string
-    {
-        $generator = PathGeneratorFactory::create($this);
-
-        return $generator->getPath($this);
-    }
-
-    public function getPathname(): string
-    {
-        return $this->directory . $this->filename . '.' . $this->extension;
     }
 }
