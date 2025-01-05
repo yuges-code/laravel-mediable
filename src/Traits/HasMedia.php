@@ -14,7 +14,7 @@ trait HasMedia
 {
     public function media(): MorphToMany
     {
-        return $this->morphToMany(Media::class, 'mediable')->using(Mediable::class);
+        return $this->morphToMany(Media::class, 'mediable')->using(Mediable::class)->withPivot('collection', 'order');
     }
 
     public function addMedia(string|UploadedFile $file): FileManager
@@ -32,7 +32,7 @@ trait HasMedia
 
     public function getFirstMedia(string $collection = 'default'): ?Media
     {
-        return $this->media->first();
+        return $this->media->firstWhere('pivot.collection', $collection);
     }
 
     public function mediaConversions(Media $media = null): ?Collection
