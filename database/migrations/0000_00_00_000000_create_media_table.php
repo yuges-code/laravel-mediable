@@ -26,7 +26,9 @@ return new class extends Migration
             $table->boolean('temporary')->index();
             $table->json('manipulations')->nullable();
             $table->json('conversions')->nullable();
+            $table->json('responsive')->nullable();
             $table->json('properties')->nullable();
+            $table->text('placeholder')->nullable();
 
             $table->unique(['disk', 'directory', 'filename', 'extension']);
 
