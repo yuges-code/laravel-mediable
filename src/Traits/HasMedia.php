@@ -3,15 +3,22 @@
 namespace Yuges\Mediable\Traits;
 
 use Yuges\Mediable\Models\Media;
-use Illuminate\Support\Collection;
 use Yuges\Mediable\Models\Mediable;
 use Yuges\Mediable\Managers\FileManager;
 use Yuges\Mediable\Managers\FileManagerFactory;
+use Yuges\Mediable\Collections\MediaCollection;
+use Yuges\Mediable\Conversions\MediaConversion;
+use Yuges\Mediable\Collections\MediaCollections;
+use Yuges\Mediable\Collections\MediaConversions;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait HasMedia
 {
+    protected MediaCollections $mediaCollections;
+
+    protected MediaConversions $mediaConversions;
+
     public function media(): MorphToMany
     {
         return $this->morphToMany(Media::class, 'mediable')->using(Mediable::class)->withPivot('collection', 'order');
@@ -35,8 +42,39 @@ trait HasMedia
         return $this->media->firstWhere('pivot.collection', $collection);
     }
 
-    public function mediaConversions(Media $media = null): ?Collection
+    public function addMediaCollection(string $name): MediaCollection
     {
-        return null;
+        if (! $this->mediaCollections) {
+            $this->mediaCollections = MediaCollections::make();
+        }
+
+        $mediaCollection = MediaCollection::create($name);
+
+        $this->mediaCollections->push($mediaCollection);
+
+        return $mediaCollection;
+    }
+
+    public function addMediaConversion(string $name): MediaConversion
+    {
+        if (! $this->mediaConversions) {
+            $this->mediaConversions = MediaConversions::make();
+        }
+
+        $mediaConversion = MediaConversion::create($name);
+
+        $this->mediaConversions->push($mediaConversion);
+
+        return $mediaConversion;
+    }
+
+    public function mediaCollection(?Media $media = null): MediaCollections
+    {
+        return $this->mediaCollections = MediaCollections::make();
+    }
+
+    public function mediaConversions(?Media $media = null): MediaConversions
+    {
+        return $this->mediaConversions = MediaConversions::make();
     }
 }
