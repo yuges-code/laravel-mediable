@@ -2,9 +2,7 @@
 
 namespace Yuges\Mediable\Collections;
 
-use Illuminate\Support\Collection;
-
-class MediaCollection extends Collection
+class MediaCollection
 {
     public function __construct(
         protected string $name

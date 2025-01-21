@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Yuges\Mediable\Managers\MediaManager;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    protected string $table = 'media';
+    public function __construct(protected string $table = 'media')
+    {
+        $this->$table = MediaManager::getMediaTable();
+    }
 
     public function up(): void
     {

@@ -9,7 +9,10 @@ return [
     /*
      * FQCN (Fully Qualified Class Name) of the model to use for media
      */
-    'model' => Yuges\Mediable\Models\Media::class,
+    'models' => [
+        'media' => Yuges\Mediable\Models\Media::class,
+        'mediable' => Yuges\Mediable\Models\Mediable::class,
+    ],
 
     /*
      * The maximum file size in bytes for a single uploaded file.

@@ -3,11 +3,15 @@
 use Yuges\Mediable\Models\Media;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Yuges\Mediable\Managers\MediaManager;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    protected string $table = 'mediables';
+    public function __construct(protected string $table = 'mediables')
+    {
+        $this->$table = MediaManager::getMediableTable();
+    }
 
     public function up(): void
     {
@@ -18,7 +22,7 @@ return new class extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->ulid('id')->primary();
 
-            $table->foreignIdFor(Media::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(MediaManager::getMediaClass())->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->morphs('mediable');
             $table->string('collection')->index();
             $table->unsignedBigInteger('order')->index();

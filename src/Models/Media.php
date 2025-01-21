@@ -36,7 +36,9 @@ class Media extends Model
     protected function casts(): array
     {
         return [
+            'responsive' => 'array',
             'properties' => 'array',
+            'conversions' => 'array',
             'manipulations' => 'array',
         ];
     }
@@ -48,11 +50,8 @@ class Media extends Model
         static::observe(MediableObserver::class);
     }
 
-    public function setFile(UploadedFile|File $file, string $disk = null)
+    public function setFile(UploadedFile|File $file)
     {
-        $this->updateTimestamps()->setUniqueIds();
-
-        $this->disk = $disk ?: config('mediable.disk');
         $this->directory = $this->getPath();
         $this->filename = pathinfo($file->getFilename(), PATHINFO_FILENAME);
         $this->extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
