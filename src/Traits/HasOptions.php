@@ -10,6 +10,8 @@ trait HasOptions
 
     protected array $properties = [];
 
+    protected bool $temporary = false;
+
     protected array $manipulations = [];
 
     protected bool $responsive = false;
@@ -18,7 +20,7 @@ trait HasOptions
 
     protected bool $preserveOriginal = false;
 
-    public function setDisk(string $disk): self
+    public function setDisk(?string $disk = null): self
     {
         $this->disk = $disk;
 
@@ -32,7 +34,7 @@ trait HasOptions
         return $this;
     }
 
-    public function setCollection(string $collection): self
+    public function setCollection(?string $collection = null): self
     {
         $this->collection = $collection;
 
@@ -56,6 +58,13 @@ trait HasOptions
     public function responsive(bool $responsive = true): self
     {
         $this->responsive = $responsive;
+
+        return $this;
+    }
+
+    public function temporary(bool $temporary = true): self
+    {
+        $this->temporary = $temporary;
 
         return $this;
     }

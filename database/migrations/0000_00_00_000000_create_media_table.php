@@ -32,7 +32,7 @@ return new class extends Migration
             $table->json('conversions')->nullable();
             $table->json('responsive')->nullable();
             $table->json('properties')->nullable();
-            $table->text('placeholder')->nullable();
+            $table->json('placeholders')->nullable();
 
             $table->unique(['disk', 'directory', 'filename', 'extension']);
 

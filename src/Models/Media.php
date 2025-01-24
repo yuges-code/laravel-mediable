@@ -19,8 +19,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property string $extension
  * @property string $mime
  * @property integer $size
+ * @property boolean $temporary
  * @property array $manipulations
  * @property array $properties
+ * @property array $placeholders
  * 
  * @property-read ?\Illuminate\Support\Carbon $created_at
  * @property-read ?\Illuminate\Support\Carbon $updated_at
@@ -39,7 +41,9 @@ class Media extends Model
             'responsive' => 'array',
             'properties' => 'array',
             'conversions' => 'array',
+            'placeholders' => 'array',
             'manipulations' => 'array',
+            'temporary' => 'boolean',
         ];
     }
 

@@ -10,8 +10,6 @@ use Yuges\Mediable\Interfaces\Mediable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-use Illuminate\Support\Facades\Storage;
-
 class MediaManager
 {
     use HasConfig, HasOptions;
@@ -25,6 +23,11 @@ class MediaManager
     protected bool $preserveOriginal = false;
 
     protected UploadedFile|File|null $file = null;
+
+    public function __construct(
+        protected FileManager $fileManager
+    ) {
+    }
 
     public function setModel(Mediable $model): self
     {
@@ -68,6 +71,7 @@ class MediaManager
             ->setUniqueIds();
 
         $media->disk = $this->disk ?: config('mediable.disk');
+        $media->temporary = $this->temporary;
         $media->properties = $this->properties;
         $media->manipulations = $this->manipulations;
 
@@ -93,16 +97,9 @@ class MediaManager
     {
         $model->attachMedia($media);
 
-        Storage::disk($media->disk)->put(
-            $media->getPathname(),
-            $this->file
-        );
-
-        if (! $this->preserveOriginal) {
-            if (file_exists($this->file)) {
-                unlink($this->file);
-            }
-        }
+        $this->fileManager
+            ->store($this->file, $media)
+            ->preserve($this->file, $this->preserveOriginal);
 
         return $media;
     }

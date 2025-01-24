@@ -2,17 +2,10 @@
 
 namespace Yuges\Mediable\Managers;
 
-use Yuges\Mediable\Interfaces\Mediable;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 class FileManagerFactory
 {
-    public static function create(Mediable $model, string|UploadedFile $file): FileManager
+    public static function create(): FileManager
     {
-        $manager = new FileManager();
-
-        return $manager
-            ->setFile($file)
-            ->setModel($model);
+        return new FileManager();
     }
 }

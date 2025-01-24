@@ -103,7 +103,7 @@ class Manipulations implements IteratorAggregate, ArrayAccess
     public function apply(Image $image): void
     {
         foreach ($this->manipulations as $manipulation) {
-            $image->{$manipulation->method}(...$manipulation->parameters);
+            $image->{$manipulation->method->value}(...$manipulation->parameters);
         }
     }
 

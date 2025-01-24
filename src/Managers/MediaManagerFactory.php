@@ -9,7 +9,9 @@ class MediaManagerFactory
 {
     public static function create(Mediable $model, string|UploadedFile $file): MediaManager
     {
-        $manager = new MediaManager();
+        $manager = new MediaManager(
+            FileManagerFactory::create()
+        );
 
         return $manager
             ->setFile($file)

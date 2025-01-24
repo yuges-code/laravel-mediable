@@ -1,5 +1,7 @@
 <?php
 
+use Yuges\Image\Enums\ImageDriver;
+
 return [
     /*
      * Filesystem disk to use if none is specified
@@ -12,6 +14,10 @@ return [
     'models' => [
         'media' => Yuges\Mediable\Models\Media::class,
         'mediable' => Yuges\Mediable\Models\Mediable::class,
+    ],
+
+    'drivers' => [
+        'image' => ImageDriver::Imagick,
     ],
 
     /*
@@ -31,6 +37,18 @@ return [
         ],
         'path' => [
             'default' => Yuges\Mediable\Generators\Path\DefaultPathGenerator::class,
+            'custom' => [
+                // generators
+            ],
+        ],
+        'resposive' => [
+            'default' => Yuges\Mediable\Generators\Placeholder\DefaultPlaceholderGenerator::class,
+            'custom' => [
+                // generators
+            ],
+        ],
+        'placeholder' => [
+            'default' => Yuges\Mediable\Generators\Placeholder\DefaultPlaceholderGenerator::class,
             'custom' => [
                 // generators
             ],
