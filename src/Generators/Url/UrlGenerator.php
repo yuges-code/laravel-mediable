@@ -2,8 +2,8 @@
 
 namespace Yuges\Mediable\Generators\Url;
 
-use Yuges\Mediable\Generators\Path\PathGenerator;
 use Yuges\Mediable\Models\Media;
+use Yuges\Mediable\Generators\Path\PathGenerator;
 
 interface UrlGenerator
 {

@@ -3,14 +3,15 @@
 namespace Yuges\Mediable\Interfaces;
 
 use Yuges\Mediable\Models\Media;
-use Illuminate\Support\Collection;
 use Yuges\Mediable\Managers\MediaManager;
+use Yuges\Mediable\Collections\MediaCollections;
+use Yuges\Mediable\Collections\MediaConversions;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 interface Mediable
 {
-    public function media(): MorphToMany;
+    public function media(): MorphMany;
 
     public function addMedia(string|UploadedFile $file): MediaManager;
 
@@ -18,5 +19,7 @@ interface Mediable
 
     public function getFirstMedia(string $collection = 'default'): ?Media;
 
-    public function mediaConversions(Media $media = null): ?Collection;
+    public function mediaCollections(?Media $media = null): MediaCollections;
+
+    public function mediaConversions(?Media $media = null): MediaConversions;
 }

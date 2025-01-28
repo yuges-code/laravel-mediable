@@ -100,6 +100,17 @@ class Manipulations implements IteratorAggregate, ArrayAccess
         return null;
     }
 
+    public function each(callable $callback): self
+    {
+        foreach ($this as $key => $item) {
+            if ($callback($item, $key) === false) {
+                break;
+            }
+        }
+
+        return $this;
+    }
+
     public function apply(Image $image): void
     {
         foreach ($this->manipulations as $manipulation) {

@@ -13,11 +13,22 @@ return [
      */
     'models' => [
         'media' => Yuges\Mediable\Models\Media::class,
-        'mediable' => Yuges\Mediable\Models\Mediable::class,
     ],
 
     'drivers' => [
         'image' => ImageDriver::Imagick,
+    ],
+
+    'queue' => [
+        'name' => env('MEDIABLE_QUEUE', ''),
+        'connection' => env('QUEUE_CONNECTION', 'sync'),
+    ],
+
+    'conversion' => [
+        'queue' => [
+            'default' => true,
+            'commit' => 'after',
+        ]
     ],
 
     /*
@@ -41,13 +52,19 @@ return [
                 // generators
             ],
         ],
-        'resposive' => [
-            'default' => Yuges\Mediable\Generators\Placeholder\DefaultPlaceholderGenerator::class,
+        'conversion' => [
+            'default' => Yuges\Mediable\Generators\Conversion\DefaultConversionGenerator::class,
             'custom' => [
                 // generators
             ],
         ],
         'placeholder' => [
+            'default' => Yuges\Mediable\Generators\Placeholder\DefaultPlaceholderGenerator::class,
+            'custom' => [
+                // generators
+            ],
+        ],
+        'resposive' => [
             'default' => Yuges\Mediable\Generators\Placeholder\DefaultPlaceholderGenerator::class,
             'custom' => [
                 // generators

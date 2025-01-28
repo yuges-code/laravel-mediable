@@ -2,15 +2,19 @@
 
 namespace Yuges\Mediable\Conversions;
 
+use Yuges\Mediable\Manipulations\Manipulation;
 use Yuges\Mediable\Manipulations\Manipulations;
 
 class MediaConversion
 {
+    protected bool $queued;
+    protected array $collections;
     protected Manipulations $manipulations;
 
     public function __construct(
         protected string $name
     ) {
+        $this->queued = config('mediable.conversion.queue.default', true);
         $this->manipulations = Manipulations::create();
     }
 
@@ -24,6 +28,39 @@ class MediaConversion
         return $this->name;
     }
 
+    public function queued(bool $queued = true): self
+    {
+        $this->queued = $queued;
+
+        return $this;
+    }
+
+    public function getQueued(): bool
+    {
+        return $this->queued;
+    }
+
+    public function setCollections(string ...$collections): self
+    {
+        $this->collections = $collections;
+
+        return $this;
+    }
+
+    public function getCollections(): array
+    {
+        return $this->collections;
+    }
+
+    public function containsCollection(string $collection): bool
+    {
+        if (! count($this->collections)) {
+            return true;
+        }
+
+        return in_array($collection, $this->collections);
+    }
+
     public function setManipulations(Manipulations|array $manipulations): self
     {
         if ($manipulations instanceof Manipulations) {
@@ -33,5 +70,27 @@ class MediaConversion
         }
 
         return $this;
+    }
+
+    public function getManipulations(): Manipulations
+    {
+        return $this->manipulations;
+    }
+
+    public function prependManipulations(Manipulations|array $manipulations): self
+    {
+        if (is_array($manipulations)) {
+            $manipulations = Manipulations::create($manipulations);
+        }
+
+        $this->manipulations->each(function (Manipulation $manipulation) use ($manipulations) {
+            if ($manipulations->find($manipulation->method)) {
+                return;
+            }
+
+            $manipulations->push($manipulation);
+        });
+
+        return $this->setManipulations($manipulations);
     }
 }

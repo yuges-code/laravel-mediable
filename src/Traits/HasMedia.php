@@ -3,15 +3,14 @@
 namespace Yuges\Mediable\Traits;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Models\Mediable;
 use Yuges\Mediable\Managers\MediaManager;
 use Yuges\Mediable\Collections\MediaCollection;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Collections\MediaCollections;
 use Yuges\Mediable\Collections\MediaConversions;
 use Yuges\Mediable\Managers\MediaManagerFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait HasMedia
 {
@@ -19,9 +18,9 @@ trait HasMedia
 
     protected MediaConversions $mediaConversions;
 
-    public function media(): MorphToMany
+    public function media(): MorphMany
     {
-        return $this->morphToMany(Media::class, 'mediable')->using(Mediable::class)->withPivot('collection', 'order');
+        return $this->morphMany(Media::class, 'mediable');
     }
 
     public function addMedia(string|UploadedFile $file): MediaManager
@@ -31,17 +30,17 @@ trait HasMedia
 
     public function attachMedia(Media $media, string $collection = 'default'): void
     {
-        $media->save();
-
-        $this->media()->attach($media, [
+        $media->fill([
             'order' => 1,
             'collection' => $collection,
         ]);
+
+        $this->media()->save($media);
     }
 
     public function getFirstMedia(string $collection = 'default'): ?Media
     {
-        return $this->media->firstWhere('pivot.collection', $collection);
+        return $this->media->firstWhere('collection', $collection);
     }
 
     public function addMediaCollection(string $name): MediaCollection

@@ -21,6 +21,8 @@ return new class extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->ulid('id')->primary();
 
+            $table->morphs('mediable');
+            $table->string('collection')->index();
             $table->string('disk', 32);
             $table->string('directory');
             $table->string('filename');
@@ -33,7 +35,8 @@ return new class extends Migration
             $table->json('responsive')->nullable();
             $table->json('properties')->nullable();
             $table->json('placeholders')->nullable();
-
+            $table->unsignedBigInteger('order')->index();
+            
             $table->unique(['disk', 'directory', 'filename', 'extension']);
 
             $table->timestamps();

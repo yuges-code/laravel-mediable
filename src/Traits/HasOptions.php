@@ -18,7 +18,7 @@ trait HasOptions
 
     protected ?string $collection = null;
 
-    protected bool $preserveOriginal = false;
+    protected bool $preserveSource = false;
 
     public function setDisk(?string $disk = null): self
     {
@@ -48,9 +48,9 @@ trait HasOptions
         return $this;
     }
 
-    public function preserveOriginal(bool $preserve = false): self
+    public function preserveSource(bool $preserve = false): self
     {
-        $this->preserveOriginal = $preserve;
+        $this->preserveSource = $preserve;
 
         return $this;
     }

@@ -15,12 +15,6 @@ class MediaManager
     use HasConfig, HasOptions;
 
     protected ?Mediable $model = null;
-    
-    protected array $properties = [];
-
-    protected array $manipulations = [];
-
-    protected bool $preserveOriginal = false;
 
     protected UploadedFile|File|null $file = null;
 
@@ -99,7 +93,7 @@ class MediaManager
 
         $this->fileManager
             ->store($this->file, $media)
-            ->preserve($this->file, $this->preserveOriginal);
+            ->preserve($this->file, $this->preserveSource);
 
         return $media;
     }

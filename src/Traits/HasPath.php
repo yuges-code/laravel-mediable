@@ -14,7 +14,7 @@ trait HasPath
         return $generator->getPath($this);
     }
 
-    public function getPathname(): string
+    public function getPathname(?string $conversion = null): string
     {
         return $this->directory . $this->filename . '.' . $this->extension;
     }

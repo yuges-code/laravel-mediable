@@ -3,7 +3,6 @@
 namespace Yuges\Mediable\Traits;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Models\Mediable;
 
 trait HasConfig
 {
@@ -27,22 +26,5 @@ trait HasConfig
     public static function getMediaTable(): string
     {
         return self::createMedia()->getTable();
-    }
-
-    public static function getMediableClass(): string
-    {
-        return config('mediable.models.mediable');
-    }
-
-    public static function createMediable(): Mediable
-    {
-        $class = self::getMediableClass();
-
-        return new $class;
-    }
-
-    public static function getMediableTable(): string
-    {
-        return self::createMediable()->getTable();
     }
 }
