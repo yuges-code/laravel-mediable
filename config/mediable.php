@@ -52,6 +52,12 @@ return [
                 // generators
             ],
         ],
+        'name' => [
+            'default' => Yuges\Mediable\Generators\Name\DefaultNameGenerator::class,
+            'custom' => [
+                // generators
+            ],
+        ],
         'conversion' => [
             'default' => Yuges\Mediable\Generators\Conversion\DefaultConversionGenerator::class,
             'custom' => [

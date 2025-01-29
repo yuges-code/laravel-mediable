@@ -12,4 +12,18 @@ enum Manipulation: string
     case Rotate = 'rotate';
     case Orientate = 'orientate';
     case Blur = 'blur';
+
+    public function parameters(): array
+    {
+        return match ($this) {
+            self::Resize => ['width', 'height', 'constraints'],
+            self::Width => ['width', 'constraints'],
+            self::Height => ['height', 'constraints'],
+            self::Flip => ['flip'],
+            self::Crop => ['width', 'height', 'x', 'y'],
+            self::Rotate => ['degrees', 'background'],
+            self::Orientate => ['orientation'],
+            self::Blur => ['blur'],
+        };
+    }
 }

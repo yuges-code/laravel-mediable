@@ -19,20 +19,22 @@ class DefaultConversionGenerator extends AbstractConversionGenerator
         $image = ImageFactory::load(
             Storage::disk($this->media->disk)->path($this->media->getPathname())
         );
-        
         $this->getManipulations($conversion)->apply($image);
 
-        $path = Storage::disk($this->media->disk)
-            ->path($this->pathGenerator->getPathToConversions($this->media) . $this->media->filename . '-' . $conversion->getName() . $this->media->extension);
+        $filename = $this->getFilename($conversion);
+        $image->save($filename);
 
-        $image->save($path);
+        $conversion->register($this->media, $filename);
+    }
 
-        if ($this->media->conversions == null) {
-            $this->media->conversions = [];
-        }
+    public function getFilename(MediaConversion $conversion): string
+    {
+        $name = $this->nameGenerator->getConversionFileName($conversion);
+        $path = $this->pathGenerator->getPathToConversions($this->media);
 
-        $this->media->conversions[$conversion->getName()] = true;
-        $this->media->save();
+        Storage::disk($this->media->disk)->makeDirectory($path);
+
+        return Storage::disk($this->media->disk)->path($path . $name);
     }
 
     public function getManipulations(MediaConversion $conversion): Manipulations

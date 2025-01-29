@@ -2,13 +2,14 @@
 
 namespace Yuges\Mediable\Conversions;
 
+use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Manipulations\Manipulation;
 use Yuges\Mediable\Manipulations\Manipulations;
 
 class MediaConversion
 {
     protected bool $queued;
-    protected array $collections;
+    protected array $collections = [];
     protected Manipulations $manipulations;
 
     public function __construct(
@@ -92,5 +93,16 @@ class MediaConversion
         });
 
         return $this->setManipulations($manipulations);
+    }
+
+    public function register(Media $media, string $file): void
+    {
+        $conversions = $media->conversions ?? [];
+
+        $conversions[$this->name] = pathinfo($file, PATHINFO_BASENAME);
+
+        $media->conversions = $conversions;
+
+        $media->save();
     }
 }

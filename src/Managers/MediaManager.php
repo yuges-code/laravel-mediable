@@ -44,8 +44,8 @@ class MediaManager
     public function store(?string $collection = null, ?string $disk = null): Media
     {
         $this
-            ->setDisk($disk)
-            ->setCollection($collection);
+            ->setDisk($disk ?? $this->disk)
+            ->setCollection($collection ?? $this->collection);
 
         if (! $this->file) {
             throw new Exception('File does not exist');
@@ -65,6 +65,7 @@ class MediaManager
             ->setUniqueIds();
 
         $media->disk = $this->disk ?: config('mediable.disk');
+        $media->collection = $this->collection ?: 'default';
         $media->temporary = $this->temporary;
         $media->properties = $this->properties;
         $media->manipulations = $this->manipulations;

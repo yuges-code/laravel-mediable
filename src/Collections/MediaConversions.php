@@ -34,7 +34,7 @@ class MediaConversions extends Collection
 
     protected function addConversions(Mediable $model): self
     {
-        $this->push($model->mediaConversions());
+        $model->mediaConversions()->each(fn (MediaConversion $conversion) => $this->push($conversion));
 
         return $this;
     }

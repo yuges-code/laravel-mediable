@@ -28,11 +28,10 @@ trait HasMedia
         return MediaManagerFactory::create($this, $file);
     }
 
-    public function attachMedia(Media $media, string $collection = 'default'): void
+    public function attachMedia(Media $media): void
     {
         $media->fill([
             'order' => 1,
-            'collection' => $collection,
         ]);
 
         $this->media()->save($media);

@@ -1,35 +1,28 @@
 <?php
 
-namespace Yuges\Mediable\Generators\Conversion;
+namespace Yuges\Mediable\Generators\Name;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
-use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
-use Yuges\Mediable\Generators\Exceptions\InvalidConversionGenerator;
+use Yuges\Mediable\Generators\Exceptions\InvalidNameGenerator;
 
-class ConversionGeneratorFactory
+class NameGeneratorFactory
 {
-    public static function create(Media $media): ConversionGenerator
+    public static function create(Media $media): NameGenerator
     {
         $class = static::getClass($media);
 
         static::validateGenerator($class);
 
-        /** @var ConversionGenerator $conversionGenerator */
-        $conversionGenerator = new $class;
-        $pathGenerator = PathGeneratorFactory::create($media);
-        $nameGenerator = NameGeneratorFactory::create($media);
+        /** @var NameGenerator $nameGenerator */
+        $nameGenerator = new $class;
 
-        return $conversionGenerator
-            ->setMedia($media)
-            ->setPathGenerator($pathGenerator)
-            ->setNameGenerator($nameGenerator);
+        return $nameGenerator->setMedia($media);
     }
 
     protected static function getClass(Media $media): string
     {
-        $class = config('mediable.generators.conversion.default');
+        $class = config('mediable.generators.name.default');
 
         // foreach (config('media-library.custom_path_generators', []) as $modelClass => $customPathGeneratorClass) {
         //     if (static::mediaBelongToModelClass($media, $modelClass)) {
@@ -61,11 +54,11 @@ class ConversionGeneratorFactory
     protected static function validateGenerator(string $class): void
     {
         if (! class_exists($class)) {
-            throw InvalidConversionGenerator::doesntExist($class);
+            throw InvalidNameGenerator::doesntExist($class);
         }
 
-        if (! is_subclass_of($class, ConversionGenerator::class)) {
-            throw InvalidConversionGenerator::doesNotImplementConversionGenerator($class);
+        if (! is_subclass_of($class, NameGenerator::class)) {
+            throw InvalidNameGenerator::doesNotImplementNameGenerator($class);
         }
     }
 }

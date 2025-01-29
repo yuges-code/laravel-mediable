@@ -15,7 +15,7 @@ interface Mediable
 
     public function addMedia(string|UploadedFile $file): MediaManager;
 
-    public function attachMedia(Media $media, string $collection = 'default'): void;
+    public function attachMedia(Media $media): void;
 
     public function getFirstMedia(string $collection = 'default'): ?Media;
 
