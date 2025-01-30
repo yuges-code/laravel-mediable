@@ -5,7 +5,7 @@ namespace Yuges\Mediable\Conversions;
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Manipulations\Manipulation;
 use Yuges\Mediable\Manipulations\Manipulations;
-use Yuges\Mediable\Placeholder\MediaPlaceholder;
+use Yuges\Mediable\Placeholders\MediaPlaceholder;
 use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
 use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
 

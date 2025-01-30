@@ -1,6 +1,6 @@
 <?php
 
-namespace Yuges\Mediable\Placeholder;
+namespace Yuges\Mediable\Placeholders;
 
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Conversions\MediaConversion;
