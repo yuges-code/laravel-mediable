@@ -16,25 +16,33 @@ class DefaultConversionGenerator extends AbstractConversionGenerator
             throw new Exception('Media model not found');
         }
 
+        $this
+            ->generateConversion($conversion)
+            ->generatePlaceholder($conversion);
+    }
+
+    protected function generateConversion(MediaConversion $conversion): self
+    {
         $image = ImageFactory::load(
             Storage::disk($this->media->disk)->path($this->media->getPathname())
         );
         $this->getManipulations($conversion)->apply($image);
 
-        $filename = $this->getFilename($conversion);
+        Storage::disk($this->media->disk)->makeDirectory($conversion->getPath($this->media));
+
+        $filename = Storage::disk($this->media->disk)->path($conversion->getPathname($this->media));
         $image->save($filename);
 
         $conversion->register($this->media, $filename);
+
+        return $this;
     }
 
-    public function getFilename(MediaConversion $conversion): string
+    protected function generatePlaceholder(MediaConversion $conversion): self
     {
-        $name = $this->nameGenerator->getConversionFileName($conversion);
-        $path = $this->pathGenerator->getPathToConversions($this->media);
+        $this->placeholderGenerator->generate($this->media, $conversion);
 
-        Storage::disk($this->media->disk)->makeDirectory($path);
-
-        return Storage::disk($this->media->disk)->path($path . $name);
+        return $this;
     }
 
     public function getManipulations(MediaConversion $conversion): Manipulations

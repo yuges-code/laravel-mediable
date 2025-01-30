@@ -11,7 +11,7 @@ interface NameGenerator
 
     public function setMedia(Media $media): self;
 
-    public function getConversionFileName(MediaConversion $conversion): string;
+    public function getConversionFilename(MediaConversion $conversion): string;
 
-    public function getResponsiveFileName(MediaConversion $conversion): string;
+    public function getResponsiveFilename(MediaConversion $conversion): string;
 }

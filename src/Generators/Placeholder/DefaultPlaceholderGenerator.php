@@ -13,7 +13,7 @@ class DefaultPlaceholderGenerator implements PlaceholderGenerator
 {
     public function generate(Media $media, ?MediaConversion $conversion = null): void
     {
-        $conversion = 'original';
+        $conversion = $conversion ?? MediaConversion::create('original');
 
         $image = ImageFactory::load(
             Storage::disk($media->disk)->path($media->getPathname())
@@ -27,12 +27,9 @@ class DefaultPlaceholderGenerator implements PlaceholderGenerator
             'height' => $size->height,
             'data' => $image->base64('jpeg'),
         ]);
+        $svg = 'data:image/svg+xml;base64,' . base64_encode((string) $svg);
 
-        $media->placeholders = [
-            $conversion => 'data:image/svg+xml;base64,' . base64_encode((string) $svg),
-        ];
-
-        $media->save();
+        $conversion->getPlaceholder()->register($media, $conversion, $svg);
     }
 
     public function getManipulations(Media $media): Manipulations

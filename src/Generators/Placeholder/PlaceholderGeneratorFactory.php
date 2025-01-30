@@ -12,7 +12,7 @@ class PlaceholderGeneratorFactory
     {
         $class = static::getClass($media);
 
-        static::guardAgainstInvalidPlaceholderGenerator($class);
+        static::validateGenerator($class);
 
         return new $class;
     }
@@ -48,7 +48,7 @@ class PlaceholderGeneratorFactory
         return false;
     }
 
-    protected static function guardAgainstInvalidPlaceholderGenerator(string $class): void
+    protected static function validateGenerator(string $class): void
     {
         if (! class_exists($class)) {
             throw InvalidPlaceholderGenerator::doesntExist($class);

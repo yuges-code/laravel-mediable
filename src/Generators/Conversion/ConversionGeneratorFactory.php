@@ -4,9 +4,8 @@ namespace Yuges\Mediable\Generators\Conversion;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
-use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
 use Yuges\Mediable\Generators\Exceptions\InvalidConversionGenerator;
+use Yuges\Mediable\Generators\Placeholder\PlaceholderGeneratorFactory;
 
 class ConversionGeneratorFactory
 {
@@ -18,13 +17,11 @@ class ConversionGeneratorFactory
 
         /** @var ConversionGenerator $conversionGenerator */
         $conversionGenerator = new $class;
-        $pathGenerator = PathGeneratorFactory::create($media);
-        $nameGenerator = NameGeneratorFactory::create($media);
+        $placeholderGenerator = PlaceholderGeneratorFactory::create($media);
 
         return $conversionGenerator
             ->setMedia($media)
-            ->setPathGenerator($pathGenerator)
-            ->setNameGenerator($nameGenerator);
+            ->setPlaceholderGenerator($placeholderGenerator);
     }
 
     protected static function getClass(Media $media): string

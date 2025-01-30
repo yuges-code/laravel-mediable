@@ -5,6 +5,9 @@ namespace Yuges\Mediable\Conversions;
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Manipulations\Manipulation;
 use Yuges\Mediable\Manipulations\Manipulations;
+use Yuges\Mediable\Placeholder\MediaPlaceholder;
+use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
+use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
 
 class MediaConversion
 {
@@ -93,6 +96,26 @@ class MediaConversion
         });
 
         return $this->setManipulations($manipulations);
+    }
+
+    public function getFilename(Media $media): string
+    {
+        return NameGeneratorFactory::create($media)->getConversionFilename($this);
+    }
+
+    public function getPath(Media $media): string
+    {
+        return PathGeneratorFactory::create($media)->getPathToConversions($media);
+    }
+
+    public function getPathname(Media $media): string
+    {
+        return $this->getPath($media) . $this->getFilename($media);
+    }
+
+    public function getPlaceholder(): MediaPlaceholder
+    {
+        return MediaPlaceholder::create();
     }
 
     public function register(Media $media, string $file): void

@@ -3,16 +3,13 @@
 namespace Yuges\Mediable\Generators\Conversion;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Generators\Path\PathGenerator;
-use Yuges\Mediable\Generators\Name\NameGenerator;
+use Yuges\Mediable\Generators\Placeholder\PlaceholderGenerator;
 
 abstract class AbstractConversionGenerator implements ConversionGenerator
 {
     protected ?Media $media = null;
 
-    protected ?PathGenerator $pathGenerator = null;
-
-    protected ?NameGenerator $nameGenerator = null;
+    protected ?PlaceholderGenerator $placeholderGenerator = null;
 
     public function setMedia(Media $media): ConversionGenerator
     {
@@ -21,16 +18,9 @@ abstract class AbstractConversionGenerator implements ConversionGenerator
         return $this;
     }
 
-    public function setPathGenerator(PathGenerator $generator): ConversionGenerator
+    public function setPlaceholderGenerator(PlaceholderGenerator $generator): ConversionGenerator
     {
-        $this->pathGenerator = $generator;
-
-        return $this;
-    }
-
-    public function setNameGenerator(NameGenerator $generator): ConversionGenerator
-    {
-        $this->nameGenerator = $generator;
+        $this->placeholderGenerator = $generator;
 
         return $this;
     }

@@ -4,7 +4,6 @@ namespace Yuges\Mediable\Managers;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Support\Facades\Storage;
-use Yuges\Mediable\Jobs\GeneratePlaceholderJob;
 use Symfony\Component\HttpFoundation\File\File;
 use Yuges\Mediable\Manipulations\FileManipulator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -19,10 +18,6 @@ class FileManager
     public function store(UploadedFile|File|string $file, Media $media): self
     {
         $this->copy($file, $media);
-
-        $job = new GeneratePlaceholderJob($media);
-
-        dispatch($job);
 
         $this->manipulator->generateDerivedFiles($media);
 

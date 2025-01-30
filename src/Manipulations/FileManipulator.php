@@ -4,6 +4,7 @@ namespace Yuges\Mediable\Manipulations;
 
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Jobs\GenerateConversionJob;
+use Yuges\Mediable\Jobs\GeneratePlaceholderJob;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Collections\MediaConversions;
 use Yuges\Mediable\Generators\Conversion\ConversionGeneratorFactory;
@@ -13,9 +14,9 @@ class FileManipulator
     public function generateDerivedFiles(Media $media): void
     {
         $this
-            ->generateConversions($media)
-            ->generatePlaceholders($media)
-            ->generateResponsive($media);
+            ->generatePlaceholder($media)
+            ->generateResponsive($media)
+            ->generateConversions($media);
     }
 
     public function generateConversions(Media $media): self
@@ -29,8 +30,12 @@ class FileManipulator
             ->dispatchConversions($media, $dispatchable);
     }
 
-    public function generatePlaceholders(Media $media): self
+    public function generatePlaceholder(Media $media): self
     {
+        $job = new GeneratePlaceholderJob($media);
+
+        dispatch($job);
+
         return $this;
     }
 
