@@ -70,11 +70,17 @@ return [
                 // generators
             ],
         ],
-        'resposive' => [
-            'default' => Yuges\Mediable\Generators\Placeholder\DefaultPlaceholderGenerator::class,
+        'responsive' => [
+            'default' => Yuges\Mediable\Generators\Responsive\DefaultResponsiveGenerator::class,
             'custom' => [
                 // generators
             ],
+            'calculator' => [
+                'default' => Yuges\Mediable\Generators\Responsive\Calculator\DefaultWidthCalculator::class,
+                'custom' => [
+                    // generators
+                ],
+            ]
         ],
     ],
 ];

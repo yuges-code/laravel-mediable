@@ -3,6 +3,7 @@
 namespace Yuges\Mediable\Conversions;
 
 use Yuges\Mediable\Models\Media;
+use Yuges\Mediable\Responsive\MediaResponsive;
 use Yuges\Mediable\Manipulations\Manipulation;
 use Yuges\Mediable\Manipulations\Manipulations;
 use Yuges\Mediable\Placeholders\MediaPlaceholder;
@@ -118,8 +119,15 @@ class MediaConversion
         return MediaPlaceholder::create();
     }
 
+    public function getResponsive(int $width): MediaResponsive
+    {
+        return MediaResponsive::create($width);
+    }
+
     public function register(Media $media, string $file): void
     {
+        $media->refresh();
+
         $conversions = $media->conversions ?? [];
 
         $conversions[$this->name] = pathinfo($file, PATHINFO_BASENAME);

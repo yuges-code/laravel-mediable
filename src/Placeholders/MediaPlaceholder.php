@@ -14,6 +14,8 @@ class MediaPlaceholder
 
     public function register(Media $media, MediaConversion $conversion, string $file): void
     {
+        $media->refresh();
+
         $placeholders = $media->placeholders ?? [];
 
         $placeholders[$conversion->getName()] = $file;
