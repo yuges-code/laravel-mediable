@@ -17,11 +17,9 @@ class FileManager
 
     public function store(UploadedFile|File|string $file, Media $media): self
     {
-        $this->copy($file, $media);
-
-        $this->manipulator->generateDerivedFiles($media);
-
-        return $this;
+        return $this
+            ->copy($file, $media)
+            ->generateDerivedFiles($media);
     }
 
     public function copy(UploadedFile|File|string $file, Media $media): self
@@ -54,6 +52,13 @@ class FileManager
         if (file_exists($file)) {
             unlink($file);
         }
+
+        return $this;
+    }
+
+    public function generateDerivedFiles(Media $media): self
+    {
+        $this->manipulator->generateDerivedFiles($media);
 
         return $this;
     }

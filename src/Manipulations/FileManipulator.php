@@ -3,7 +3,9 @@
 namespace Yuges\Mediable\Manipulations;
 
 use Yuges\Mediable\Models\Media;
+use Yuges\Mediable\Jobs\AbstractMediaJob;
 use Yuges\Mediable\Jobs\GenerateConversionJob;
+use Yuges\Mediable\Jobs\GenerateResponsiveJob;
 use Yuges\Mediable\Jobs\GeneratePlaceholderJob;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Collections\MediaConversions;
@@ -32,15 +34,31 @@ class FileManipulator
 
     public function generatePlaceholder(Media $media): self
     {
-        $job = new GeneratePlaceholderJob($media);
+        if (! config('mediable.placeholder.generate', false)) {
+            return $this;
+        }
 
-        dispatch($job);
+        $this->dispatchJob(
+            'placeholder',
+            ['media' => $media],
+            GeneratePlaceholderJob::class
+        );
 
         return $this;
     }
 
     public function generateResponsive(Media $media): self
     {
+        if (! config('mediable.responsive.generate', false)) {
+            return $this;
+        }
+
+        $this->dispatchJob(
+            'responsive',
+            ['media' => $media],
+            GenerateResponsiveJob::class
+        );
+
         return $this;
     }
 
@@ -63,10 +81,38 @@ class FileManipulator
             return $this;
         }
 
-        $job = new GenerateConversionJob($media, $conversions);
-
-        dispatch($job);
+        $this->dispatchJob(
+            'conversion',
+            [
+                'media' => $media,
+                'conversions' => $conversions
+            ],
+            GenerateConversionJob::class
+        );
 
         return $this;
+    }
+
+    protected function dispatchJob(string $type, array $arguments, string $default)
+    {
+        $class = config("mediable.{$type}.job", $default);
+
+        if ((! $class) || (! is_string($class))) {
+            return $this;
+        }
+
+        $job = new $class(...$arguments);
+
+        if (! $job instanceof AbstractMediaJob) {
+            return $this;
+        }
+
+        $job
+            ->onQueue(config('mediable.queue.name'))
+            ->onConnection(config('mediable.queue.connection'));
+
+        config("mediable.{$type}.queue.commit") === 'after'
+            ? dispatch($job)->afterCommit()
+            : dispatch($job);
     }
 }

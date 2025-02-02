@@ -13,6 +13,13 @@ use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
 class MediaConversion
 {
     protected bool $queued;
+
+    /** @var array{responsive: bool, placeholder: bool} */
+    protected array $with = [
+        'responsive' => false,
+        'placeholder' => false,
+    ];
+
     protected array $collections = [];
     protected Manipulations $manipulations;
 
@@ -20,6 +27,10 @@ class MediaConversion
         protected string $name
     ) {
         $this->queued = config('mediable.conversion.queue.default', true);
+        $this->with = [
+            'responsive' => config('mediable.responsive.generate', false),
+            'placeholder' => config('mediable.placeholder.generate', false),
+        ];
         $this->manipulations = Manipulations::create();
     }
 
@@ -101,11 +112,19 @@ class MediaConversion
 
     public function getFilename(Media $media): string
     {
+        if ($this->name === 'original') {
+            return $media->getFilename();
+        }
+
         return NameGeneratorFactory::create($media)->getConversionFilename($this);
     }
 
     public function getPath(Media $media): string
     {
+        if ($this->name === 'original') {
+            return $media->getPath();
+        }
+
         return PathGeneratorFactory::create($media)->getPathToConversions($media);
     }
 
@@ -122,6 +141,41 @@ class MediaConversion
     public function getResponsive(int $width): MediaResponsive
     {
         return MediaResponsive::create($width);
+    }
+
+    /**
+     * @return array{responsive: bool, placeholder: bool}
+     */
+    public function getWith(): array
+    {
+        return $this->with;
+    }
+
+    public function withResponsive(bool $responsive = true): self
+    {
+        $this->with['responsive'] = $responsive;
+
+        return $this;
+    }
+
+    public function withPlaceholder(bool $placeholder = true): self
+    {
+        $this->with['placeholder'] = $placeholder;
+
+        return $this;
+    }
+
+    public function withoutResponsive(): self
+    {
+        $this->with['responsive'] = false;
+
+        return $this;
+    }
+    public function withoutPlaceholder(): self
+    {
+        $this->with['placeholder'] = false;
+
+        return $this;
     }
 
     public function register(Media $media, string $file): void

@@ -11,7 +11,7 @@ interface ResponsiveGenerator
 {
     public function setMedia(Media $media): self;
 
-    public function generate(MediaConversion $conversion): void;
+    public function generate(?MediaConversion $conversion = null): void;
 
     public function setWidthCalculator(WidthCalculator $calculator): self;
 

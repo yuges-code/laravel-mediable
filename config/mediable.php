@@ -25,16 +25,38 @@ return [
     ],
 
     'conversion' => [
+        'job' => Yuges\Mediable\Jobs\GenerateConversionJob::class,
         'queue' => [
             'default' => true,
             'commit' => 'after',
         ]
     ],
+    'placeholder' => [
+        'job' => Yuges\Mediable\Jobs\GeneratePlaceholderJob::class,
+        'queue' => [
+            'default' => true,
+            'commit' => 'after',
+        ],
+        'generate' => false,
+    ],
+    'responsive' => [
+        'job' => Yuges\Mediable\Jobs\GenerateResponsiveJob::class,
+        'queue' => [
+            'default' => true,
+            'commit' => 'after',
+        ],
+        'generate' => false,
+        'calculator' => [
+            'coefficient' => 0.5,
+        ]
+    ],
 
-    /*
-     * The maximum file size in bytes for a single uploaded file.
-     */
-    'max_file_size' => 1024 * 1024 * 10, // 10MB
+    'file' => [
+        'size' => [
+            'min' => 0, // 0MB
+            'max' => 1024 * 1024 * 10, // 10MB
+        ],
+    ],
 
     /*
      * Generators.

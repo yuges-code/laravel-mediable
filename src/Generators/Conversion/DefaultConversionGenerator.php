@@ -41,6 +41,10 @@ class DefaultConversionGenerator extends AbstractConversionGenerator
 
     protected function generatePlaceholder(MediaConversion $conversion): self
     {
+        if (! $conversion->getWith()['placeholder'] ?? false) {
+            return $this;
+        }
+
         $this->placeholderGenerator->generate($this->media, $conversion);
 
         return $this;
@@ -48,6 +52,10 @@ class DefaultConversionGenerator extends AbstractConversionGenerator
 
     protected function generateResponsive(MediaConversion $conversion): self
     {
+        if (! $conversion->getWith()['responsive'] ?? false) {
+            return $this;
+        }
+
         $this->responsiveGenerator->generate($conversion);
 
         return $this;

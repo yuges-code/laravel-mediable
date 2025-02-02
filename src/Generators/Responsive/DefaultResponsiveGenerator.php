@@ -12,11 +12,13 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class DefaultResponsiveGenerator extends AbstractResponsiveGenerator
 {
-    public function generate(MediaConversion $conversion): void
+    public function generate(?MediaConversion $conversion = null): void
     {
         if (! $this->media) {
             throw new Exception('Media model not found');
         }
+
+        $conversion = $conversion ?? MediaConversion::create('original');
 
         $file = new File(
             Storage::disk($this->media->disk)->path($conversion->getPathname($this->media))

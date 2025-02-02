@@ -2,6 +2,7 @@
 
 namespace Yuges\Mediable\Generators\Responsive\Calculator;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Yuges\Mediable\Image\ImageFactory;
 use Symfony\Component\HttpFoundation\File\File;
@@ -10,6 +11,10 @@ class DefaultWidthCalculator extends AbstractWidthCalculator
 {
     public function calculate(File $file): Collection
     {
+        if ($this->coefficient <= 0 || $this->coefficient >= 1) {
+            return new Exception('Coefficient should be from 0 to 1');
+        }
+
         $image = ImageFactory::load($file->getPathname());
 
         $width = $image->getWidth();
@@ -29,7 +34,7 @@ class DefaultWidthCalculator extends AbstractWidthCalculator
         $pixelPrice = $size / $area;
 
         while (true) {
-            $size *= 0.7;
+            $size *= $this->coefficient;
 
             $newWidth = (int) floor(sqrt(($size / $pixelPrice) / $ratio));
 
