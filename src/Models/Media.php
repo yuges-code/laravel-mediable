@@ -4,12 +4,13 @@ namespace Yuges\Mediable\Models;
 
 use Yuges\Mediable\Traits\HasUrl;
 use Yuges\Mediable\Traits\HasPath;
+use Yuges\Mediable\Traits\HasOrder;
 use Illuminate\Database\Eloquent\Model;
-use Yuges\Mediable\Observers\MediableObserver;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -36,7 +37,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Media extends Model
 {
-    use HasUlids, HasFactory, HasPath, HasUrl;
+    use HasUlids, HasFactory, SoftDeletes, HasPath, HasUrl, HasOrder;
 
     protected $table = 'media';
 
@@ -52,13 +53,6 @@ class Media extends Model
             'manipulations' => 'array',
             'temporary' => 'boolean',
         ];
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::observe(MediableObserver::class);
     }
 
     public function mediable(): MorphTo

@@ -56,6 +56,13 @@ class FileManager
         return $this;
     }
 
+    public function removeAll(Media $media): self
+    {
+        Storage::disk($media->disk)->deleteDirectory($media->getPath());
+
+        return $this;
+    }
+
     public function generateDerivedFiles(Media $media): self
     {
         $this->manipulator->generateDerivedFiles($media);

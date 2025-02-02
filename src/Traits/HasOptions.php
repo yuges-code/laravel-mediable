@@ -2,17 +2,15 @@
 
 namespace Yuges\Mediable\Traits;
 
-use Yuges\Mediable\Models\Media;
-
 trait HasOptions
 {
     protected ?string $disk = null;
 
-    protected array $properties = [];
+    protected ?array $properties = null;
 
     protected bool $temporary = false;
 
-    protected array $manipulations = [];
+    protected ?array $manipulations = null;
 
     protected bool $responsive = false;
 
