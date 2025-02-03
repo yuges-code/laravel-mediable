@@ -6,6 +6,8 @@ use Yuges\Mediable\Traits\HasUrl;
 use Yuges\Mediable\Traits\HasPath;
 use Yuges\Mediable\Traits\HasOrder;
 use Illuminate\Database\Eloquent\Model;
+use Yuges\Mediable\Traits\HasResponsive;
+use Yuges\Mediable\Traits\HasPlaceholder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -27,17 +29,22 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property boolean $temporary
  * @property ?array $manipulations
  * @property ?array $conversions
- * @property ?array $responsive
  * @property ?array $properties
- * @property ?array $placeholders
- * @property integer $order
  * 
  * @property-read ?\Illuminate\Support\Carbon $created_at
  * @property-read ?\Illuminate\Support\Carbon $updated_at
  */
 class Media extends Model
 {
-    use HasUlids, HasFactory, SoftDeletes, HasPath, HasUrl, HasOrder;
+    use
+        HasUrl,
+        HasPath,
+        HasUlids,
+        HasOrder,
+        HasFactory,
+        SoftDeletes,
+        HasResponsive,
+        HasPlaceholder;
 
     protected $table = 'media';
 

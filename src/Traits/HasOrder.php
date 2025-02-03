@@ -4,6 +4,9 @@ namespace Yuges\Mediable\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @property integer $order
+ */
 trait HasOrder
 {
     public function setHighestOrderNumber(): void

@@ -3,7 +3,9 @@
 namespace Yuges\Mediable\Traits;
 
 use Yuges\Mediable\Models\Media;
+use Yuges\Mediable\Interfaces\Mediable;
 use Yuges\Mediable\Managers\MediaManager;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Yuges\Mediable\Collections\MediaCollection;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Collections\MediaCollections;
@@ -18,6 +20,30 @@ trait HasMedia
 
     protected MediaConversions $mediaConversions;
 
+    protected bool $deleteMedia = true;
+
+    public static function bootHasMedia(): void
+    {
+        static::deleting(function (Mediable $model) {
+            if (! $model->shouldDeleteMedia()) {
+                return;
+            }
+
+            if (in_array(SoftDeletes::class, class_uses_recursive($model))) {
+                if (! $model->forceDeleting) {
+                    return;
+                }
+            }
+
+            $model->media()->cursor()->each(fn (Media $media) => $media->forceDelete());
+        });
+    }
+
+    public function shouldDeleteMedia(): bool
+    {
+        return $this->deleteMedia;
+    }
+
     public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');
@@ -30,10 +56,6 @@ trait HasMedia
 
     public function attachMedia(Media $media): void
     {
-        $media->fill([
-            'order' => 1,
-        ]);
-
         $this->media()->save($media);
     }
 

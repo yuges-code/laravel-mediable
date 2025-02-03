@@ -22,4 +22,6 @@ interface Mediable
     public function mediaCollections(?Media $media = null): MediaCollections;
 
     public function mediaConversions(?Media $media = null): MediaConversions;
+
+    public function shouldDeleteMedia(): bool;
 }

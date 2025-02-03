@@ -2,13 +2,26 @@
 
 namespace Yuges\Mediable\Generators\Url;
 
+use Yuges\Mediable\Conversions\MediaConversion;
+
 class DefaultUrlGenerator extends AbstractUrlGenerator
 {
-    public function getUrl(): string
+    public function getUrl(string $conversion = ''): string
     {
-        $url = $this->getDisk()->url($this->getPathname());
+        if ($conversion) {
+            $conversion = MediaConversion::create($conversion);
+
+            $url = $this->getDisk()->url($conversion->getPathname($this->media));
+        } else {
+            $url = $this->getDisk()->url($this->getPathname());
+        }
 
         return $url;
+    }
+
+    public function getFilename(): string
+    {
+        return $this->media->filename . '.' . $this->media->extension;
     }
 
     public function getPath(): string
@@ -18,6 +31,6 @@ class DefaultUrlGenerator extends AbstractUrlGenerator
 
     public function getPathname(): string
     {
-        return $this->getPath() . $this->media->filename . '.' . $this->media->extension;
+        return $this->getPath() . $this->getFilename();
     }
 }
