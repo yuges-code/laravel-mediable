@@ -5,6 +5,7 @@ namespace Yuges\Mediable\Models;
 use Yuges\Mediable\Traits\HasUrl;
 use Yuges\Mediable\Traits\HasPath;
 use Yuges\Mediable\Traits\HasOrder;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Yuges\Mediable\Traits\HasResponsive;
 use Yuges\Mediable\Traits\HasPlaceholder;
@@ -74,5 +75,12 @@ class Media extends Model
         $this->extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
         $this->mime = $file->getMimeType();
         $this->size = $file->getSize();
+    }
+
+    public function getFile(?string $conversion = null): File
+    {
+        $path = Storage::disk($this->disk)->path($this->getPathname($conversion));
+
+        return new File($path);
     }
 }
