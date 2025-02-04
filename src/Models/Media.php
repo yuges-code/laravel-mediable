@@ -72,7 +72,7 @@ class Media extends Model
     {
         $this->directory = $this->getPath();
         $this->filename = pathinfo($file->getFilename(), PATHINFO_FILENAME);
-        $this->extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+        $this->extension = $file->getExtension();
         $this->mime = $file->getMimeType();
         $this->size = $file->getSize();
     }
