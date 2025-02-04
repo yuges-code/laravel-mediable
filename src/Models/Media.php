@@ -71,8 +71,8 @@ class Media extends Model
     public function setFile(UploadedFile|File $file)
     {
         $this->directory = $this->getPath();
-        $this->filename = pathinfo($file->getFilename(), PATHINFO_FILENAME);
-        $this->extension = $file->getExtension();
+        $this->filename = pathinfo($file->getClientOriginalName() ?? $file->getFilename(), PATHINFO_FILENAME);
+        $this->extension = $file->guessExtension();
         $this->mime = $file->getMimeType();
         $this->size = $file->getSize();
     }
