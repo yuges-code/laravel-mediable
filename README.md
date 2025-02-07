@@ -1,4 +1,10 @@
 # Laravel-mediable
+
+![GitHub Release](https://img.shields.io/github/v/release/yuges-code/laravel-mediable)
+![Packagist Downloads](https://img.shields.io/packagist/dt/yuges-code/laravel-mediable)
+![GitHub License](https://img.shields.io/github/license/yuges-code/laravel-mediable)
+![Packagist Stars](https://img.shields.io/packagist/stars/yuges-code/laravel-mediable)
+
 Package for easily uploading and attaching media files to Laravel eloquent models
 
 ## Installation
