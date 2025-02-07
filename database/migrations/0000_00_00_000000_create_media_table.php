@@ -36,7 +36,7 @@ return new class extends Migration
             $table->json('properties')->nullable();
             $table->json('placeholders')->nullable();
             $table->unsignedBigInteger('order')->index();
-            
+
             $table->unique(['disk', 'directory', 'filename', 'extension']);
 
             $table->timestamps();
