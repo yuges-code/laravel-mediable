@@ -1,0 +1,55 @@
+{
+    "name": "yuges-code/laravel-package-template",
+    "description": "🚀 Starter template for all Yuges Laravel packages",
+    "keywords": [
+        "php",
+        "yuges",
+        "laravel",
+        "package",
+        "template"
+    ],
+    "homepage": "https://yuges-code.github.io/laravel-package-template",
+    "support": {
+        "source": "https://github.com/yuges-code/laravel-package-template",
+        "issues": "https://github.com/yuges-code/laravel-package-template/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Georgy",
+            "email": "goshasafonov@yandex.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "yuges-code/laravel-package": "^1.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yuges\\LaravelPackageTemplate\\": "src",
+            "Yuges\\LaravelPackageTemplate\\Database\\Seeders\\": "database/seeders/",
+            "Yuges\\LaravelPackageTemplate\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yuges\\Package\\Tests\\": "tests/src"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yuges\\LaravelPackageTemplate\\Providers\\TemplateServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
