@@ -12,7 +12,27 @@ return [
      * FQCN (Fully Qualified Class Name) of the model to use for media
      */
     'models' => [
-        'media' => Yuges\Mediable\Models\Media::class,
+        'media' => [
+            'key' => Yuges\Package\Enums\KeyType::BigInteger,
+            'table' => 'media',
+            'class' => Yuges\Mediable\Models\Media::class,
+            'observer' => Yuges\Mediable\Observers\MediaObserver::class,
+        ],
+        'mediable' => [
+            'key' => Yuges\Package\Enums\KeyType::BigInteger,
+            'default' => [
+                'class' => \App\Models\User::class,
+            ],
+            'allowed' => [
+                'classes' => [
+                    \App\Models\User::class,
+                ],
+            ],
+            'relation' => [
+                'name' => 'mediable',
+            ],
+            'observer' => Yuges\Mediable\Observers\MediableObserver::class,
+        ],
     ],
 
     'drivers' => [
