@@ -1,8 +1,8 @@
 <?php
 
-namespace Yuges\Package\Tests\Unit;
+namespace Yuges\Mediable\Tests\Unit;
 
-use Yuges\Package\Tests\TestCase;
+use Yuges\Mediable\Tests\TestCase;
 
 class ExampleTest extends TestCase
 {

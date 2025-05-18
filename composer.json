@@ -24,6 +24,9 @@
     ],
     "require": {
         "php": "^8.4",
+        "ext-exif": "*",
+        "ext-imagick": "*",
+        "yuges-code/image-php": "*",
         "yuges-code/laravel-package": "^1.1",
         "yuges-code/laravel-orderable": "^1.0"
     },

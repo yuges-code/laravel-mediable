@@ -22,7 +22,7 @@ class MediableServiceProvider extends \Yuges\Package\Providers\PackageServicePro
 
         $package
             ->hasName($this->name)
-            ->hasConfig('groupable')
+            ->hasConfig('mediable')
             ->hasMigrations([
                 'create_media_table',
             ])
