@@ -3,20 +3,22 @@
 namespace Yuges\Mediable\Models;
 
 use Yuges\Package\Models\Model;
+use Yuges\Mediable\Config\Config;
 use Yuges\Mediable\Traits\HasUrl;
 use Yuges\Mediable\Traits\HasPath;
-use Yuges\Mediable\Traits\HasOrder;
+use Yuges\Orderable\Traits\HasOrder;
+use Yuges\Mediable\Traits\HasMediable;
 use Illuminate\Support\Facades\Storage;
 use Yuges\Mediable\Traits\HasResponsive;
 use Yuges\Mediable\Traits\HasPlaceholder;
+use Yuges\Orderable\Options\OrderOptions;
+use Yuges\Orderable\Interfaces\Orderable;
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\File\File;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @property string $mediable_id
- * @property string $mediable_type
  * @property string $collection
  * @property string $disk
  * @property string $directory
@@ -29,19 +31,25 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property ?array $conversions
  * @property ?array $properties
  */
-class Media extends Model
+class Media extends Model implements Orderable
 {
     use
         HasUrl,
         HasPath,
         HasOrder,
         HasFactory,
+        HasMediable,
         HasResponsive,
         HasPlaceholder;
 
     protected $table = 'media';
 
     protected $guarded = ['id'];
+
+    public function getTable(): string
+    {
+        return Config::getMediaTable() ?? $this->table;
+    }
 
     protected function casts(): array
     {
@@ -55,9 +63,15 @@ class Media extends Model
         ];
     }
 
-    public function mediable(): MorphTo
+    public function orderable(): OrderOptions
     {
-        return $this->morphTo();
+        $options = new OrderOptions();
+
+        $options->query = fn (Builder $builder) => $builder
+            ->where('mediable_id', $this->mediable_id)
+            ->where('mediable_type', $this->mediable_type);
+
+        return $options;
     }
 
     public function setFile(UploadedFile|File $file)

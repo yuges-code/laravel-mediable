@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->keyMorphs(
                 Config::getMediableKeyType(KeyType::BigInteger),
-                Config::getMediableRelationName()
+                Config::getMediableRelationName('mediable')
             );
 
             $table->string('collection')->index();

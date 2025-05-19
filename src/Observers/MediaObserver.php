@@ -9,16 +9,12 @@ class MediaObserver
 {
     public function creating(Media $media): void
     {
-        if ($media->shouldSortWhenCreating()) {
-            if (is_null($media->order)) {
-                $media->setHighestOrderNumber();
-            }
-        }
+        # code...
     }
 
     public function updating(Media $media): void
     {
-
+        # code...
     }
 
     public function deleted(Media $media): void

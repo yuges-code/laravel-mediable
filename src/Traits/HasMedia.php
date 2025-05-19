@@ -3,9 +3,9 @@
 namespace Yuges\Mediable\Traits;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Interfaces\Mediable;
+use Yuges\Mediable\Config\Config;
 use Yuges\Mediable\Managers\MediaManager;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Yuges\Mediable\Observers\MediableObserver;
 use Yuges\Mediable\Collections\MediaCollection;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Collections\MediaCollections;
@@ -22,21 +22,9 @@ trait HasMedia
 
     protected bool $deleteMedia = true;
 
-    public static function bootHasMedia(): void
+    protected static function bootHasMedia(): void
     {
-        static::deleting(function (Mediable $model) {
-            if (! $model->shouldDeleteMedia()) {
-                return;
-            }
-
-            if (in_array(SoftDeletes::class, class_uses_recursive($model))) {
-                if (! $model->forceDeleting) {
-                    return;
-                }
-            }
-
-            $model->media()->cursor()->each(fn (Media $media) => $media->forceDelete());
-        });
+        static::observe(Config::getMediableObserverClass(MediableObserver::class));
     }
 
     public function shouldDeleteMedia(): bool
