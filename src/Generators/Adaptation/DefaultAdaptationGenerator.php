@@ -10,7 +10,7 @@ use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Manipulations\Manipulations;
 use Symfony\Component\HttpFoundation\File\File;
 
-class DefaultAdaptationGenerator extends AbstractResponsiveGenerator
+class DefaultAdaptationGenerator extends AbstractAdaptationGenerator
 {
     public function generate(?MediaConversion $conversion = null): void
     {
@@ -26,23 +26,23 @@ class DefaultAdaptationGenerator extends AbstractResponsiveGenerator
 
         $this->widthCalculator
             ->calculate($file)
-            ->each(fn ($width) => $this->generateResponsiveImage($conversion, $file, $width));
+            ->each(fn ($width) => $this->generateAdaptation($conversion, $file, $width));
     }
 
-    public function generateResponsiveImage(MediaConversion $conversion, File $file, int $width): self
+    public function generateAdaptation(MediaConversion $conversion, File $file, int $width): self
     {
         $image = ImageFactory::load($file->getPathname());
 
         $this->getManipulations($conversion, $width)->apply($image);
 
-        $responvive = $conversion->getResponsive($width);
+        $adaptation = $conversion->getAdaptation($width);
 
-        Storage::disk($this->media->disk)->makeDirectory($responvive->getPath($this->media));
+        Storage::disk($this->media->disk)->makeDirectory($adaptation->getPath($this->media));
 
-        $filename = Storage::disk($this->media->disk)->path($responvive->getPathname($this->media, $conversion));
+        $filename = Storage::disk($this->media->disk)->path($adaptation->getPathname($this->media, $conversion));
         $image->save($filename);
 
-        $responvive->register($this->media, $conversion, $filename);
+        $adaptation->register($this->media, $conversion, $filename);
 
         return $this;
     }

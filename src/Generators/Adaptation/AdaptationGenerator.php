@@ -7,7 +7,7 @@ use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Manipulations\Manipulations;;
 use Yuges\Mediable\Generators\Adaptation\Calculator\WidthCalculator;
 
-interface ResponsiveGenerator
+interface AdaptationGenerator
 {
     public function setMedia(Media $media): self;
 

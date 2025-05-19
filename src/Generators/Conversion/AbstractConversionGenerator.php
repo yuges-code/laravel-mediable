@@ -3,14 +3,14 @@
 namespace Yuges\Mediable\Generators\Conversion;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Generators\Adaptation\ResponsiveGenerator;
+use Yuges\Mediable\Generators\Adaptation\AdaptationGenerator;
 use Yuges\Mediable\Generators\Placeholder\PlaceholderGenerator;
 
 abstract class AbstractConversionGenerator implements ConversionGenerator
 {
     protected ?Media $media = null;
 
-    protected ?ResponsiveGenerator $responsiveGenerator = null;
+    protected ?AdaptationGenerator $adaptationGenerator = null;
 
     protected ?PlaceholderGenerator $placeholderGenerator = null;
 
@@ -21,9 +21,9 @@ abstract class AbstractConversionGenerator implements ConversionGenerator
         return $this;
     }
 
-    public function setResponsiveGenerator(ResponsiveGenerator $generator): ConversionGenerator
+    public function setAdaptationGenerator(AdaptationGenerator $generator): ConversionGenerator
     {
-        $this->responsiveGenerator = $generator;
+        $this->adaptationGenerator = $generator;
 
         return $this;
     }

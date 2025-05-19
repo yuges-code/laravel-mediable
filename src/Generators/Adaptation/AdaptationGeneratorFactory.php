@@ -4,31 +4,31 @@ namespace Yuges\Mediable\Generators\Adaptation;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Yuges\Mediable\Generators\Exceptions\InvalidResponsiveGenerator;
+use Yuges\Mediable\Generators\Exceptions\InvalidAdaptationGenerator;
 use Yuges\Mediable\Generators\Adaptation\Calculator\WidthCalculatorFactory;
 
-class ResponsiveGeneratorFactory
+class AdaptationGeneratorFactory
 {
-    public static function create(Media $media): ResponsiveGenerator
+    public static function create(Media $media): AdaptationGenerator
     {
         $class = static::getClass($media);
 
         static::validateGenerator($class);
 
-        /** @var ResponsiveGenerator $responsiveGenerator */
-        $responsiveGenerator = new $class;
+        /** @var AdaptationGenerator $adaptationGenerator */
+        $adaptationGenerator = new $class;
         $widthCalculator = WidthCalculatorFactory::create($media);
 
-        return $responsiveGenerator
+        return $adaptationGenerator
             ->setMedia($media)
             ->setWidthCalculator($widthCalculator);
     }
 
     protected static function getClass(Media $media): string
     {
-        $class = config('mediable.generators.responsive.default');
+        $class = config('mediable.generators.adaptation.default');
 
-        foreach (config('mediable.generators.responsive.custom', []) as $modelClass => $customClass) {
+        foreach (config('mediable.generators.adaptation.custom', []) as $modelClass => $customClass) {
             if (static::mediaBelongToModelClass($media, $modelClass)) {
                 return $customClass;
             }
@@ -57,11 +57,11 @@ class ResponsiveGeneratorFactory
     protected static function validateGenerator(string $class): void
     {
         if (! class_exists($class)) {
-            throw InvalidResponsiveGenerator::doesntExist($class);
+            throw InvalidAdaptationGenerator::doesntExist($class);
         }
 
-        if (! is_subclass_of($class, ResponsiveGenerator::class)) {
-            throw InvalidResponsiveGenerator::doesNotImplementResponsiveGenerator($class);
+        if (! is_subclass_of($class, AdaptationGenerator::class)) {
+            throw InvalidAdaptationGenerator::doesNotImplementAdaptationGenerator($class);
         }
     }
 }

@@ -19,7 +19,7 @@ class DefaultConversionGenerator extends AbstractConversionGenerator
         $this
             ->generateConversion($conversion)
             ->generatePlaceholder($conversion)
-            ->generateResponsive($conversion);
+            ->generateAdaptations($conversion);
     }
 
     protected function generateConversion(MediaConversion $conversion): self
@@ -50,13 +50,13 @@ class DefaultConversionGenerator extends AbstractConversionGenerator
         return $this;
     }
 
-    protected function generateResponsive(MediaConversion $conversion): self
+    protected function generateAdaptations(MediaConversion $conversion): self
     {
-        if (! $conversion->getWith()['responsive'] ?? false) {
+        if (! $conversion->getWith()['adaptation'] ?? false) {
             return $this;
         }
 
-        $this->responsiveGenerator->generate($conversion);
+        $this->adaptationGenerator->generate($conversion);
 
         return $this;
     }

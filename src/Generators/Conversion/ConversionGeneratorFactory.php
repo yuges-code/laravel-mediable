@@ -5,7 +5,7 @@ namespace Yuges\Mediable\Generators\Conversion;
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Yuges\Mediable\Generators\Exceptions\InvalidConversionGenerator;
-use Yuges\Mediable\Generators\Responsive\ResponsiveGeneratorFactory;
+use Yuges\Mediable\Generators\Adaptation\AdaptationGeneratorFactory;
 use Yuges\Mediable\Generators\Placeholder\PlaceholderGeneratorFactory;
 
 class ConversionGeneratorFactory
@@ -18,12 +18,12 @@ class ConversionGeneratorFactory
 
         /** @var ConversionGenerator $conversionGenerator */
         $conversionGenerator = new $class;
-        $responsiveGenerator = ResponsiveGeneratorFactory::create($media);
+        $adaptationGenerator = AdaptationGeneratorFactory::create($media);
         $placeholderGenerator = PlaceholderGeneratorFactory::create($media);
 
         return $conversionGenerator
             ->setMedia($media)
-            ->setResponsiveGenerator($responsiveGenerator)
+            ->setAdaptationGenerator($adaptationGenerator)
             ->setPlaceholderGenerator($placeholderGenerator);
     }
 

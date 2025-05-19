@@ -22,9 +22,9 @@ class WidthCalculatorFactory
 
     protected static function getClass(Media $media): string
     {
-        $class = config('mediable.generators.responsive.calculator.default');
+        $class = config('mediable.generators.adaptation.calculator.default');
 
-        foreach (config('mediable.generators.responsive.calculator.custom', []) as $modelClass => $customClass) {
+        foreach (config('mediable.generators.adaptation.calculator.custom', []) as $modelClass => $customClass) {
             if (static::mediaBelongToModelClass($media, $modelClass)) {
                 return $customClass;
             }

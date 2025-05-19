@@ -12,7 +12,7 @@ abstract class AbstractWidthCalculator implements WidthCalculator
 
     public function __construct()
     {
-        $this->coefficient = (float) config('mediable.responsive.calculator.coefficient', 0.5);
+        $this->coefficient = (float) config('mediable.adaptation.calculator.coefficient', 0.5);
     }
 
     public function setMedia(Media $media): WidthCalculator

@@ -5,7 +5,7 @@ namespace Yuges\Mediable\Manipulations;
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Jobs\AbstractMediaJob;
 use Yuges\Mediable\Jobs\GenerateConversionJob;
-use Yuges\Mediable\Jobs\GenerateResponsiveJob;
+use Yuges\Mediable\Jobs\GenerateAdaptationJob;
 use Yuges\Mediable\Jobs\GeneratePlaceholderJob;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Collections\MediaConversions;
@@ -17,7 +17,7 @@ class FileManipulator
     {
         $this
             ->generatePlaceholder($media)
-            ->generateResponsive($media)
+            ->generateAdaptations($media)
             ->generateConversions($media);
     }
 
@@ -47,16 +47,16 @@ class FileManipulator
         return $this;
     }
 
-    public function generateResponsive(Media $media): self
+    public function generateAdaptations(Media $media): self
     {
-        if (! config('mediable.responsive.generate', false)) {
+        if (! config('mediable.adaptation.generate', false)) {
             return $this;
         }
 
         $this->dispatchJob(
-            'responsive',
+            'adaptation',
             ['media' => $media],
-            GenerateResponsiveJob::class
+            GenerateAdaptationJob::class
         );
 
         return $this;
