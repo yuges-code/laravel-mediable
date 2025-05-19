@@ -5,7 +5,7 @@ namespace Yuges\Mediable\Generators\Conversion;
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Manipulations\Manipulations;
-use Yuges\Mediable\Generators\Responsive\ResponsiveGenerator;
+use Yuges\Mediable\Generators\Adaptation\ResponsiveGenerator;
 use Yuges\Mediable\Generators\Placeholder\PlaceholderGenerator;
 
 interface ConversionGenerator

@@ -3,9 +3,9 @@
 namespace Yuges\Mediable\Conversions;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Responsive\MediaResponsive;
 use Yuges\Mediable\Manipulations\Manipulation;
 use Yuges\Mediable\Manipulations\Manipulations;
+use Yuges\Mediable\Adaptations\MediaAdaptation;
 use Yuges\Mediable\Placeholders\MediaPlaceholder;
 use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
 use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
@@ -14,9 +14,9 @@ class MediaConversion
 {
     protected bool $queued;
 
-    /** @var array{responsive: bool, placeholder: bool} */
+    /** @var array{adaptation: bool, placeholder: bool} */
     protected array $with = [
-        'responsive' => false,
+        'adaptation' => false,
         'placeholder' => false,
     ];
 
@@ -28,7 +28,7 @@ class MediaConversion
     ) {
         $this->queued = config('mediable.conversion.queue.default', true);
         $this->with = [
-            'responsive' => config('mediable.responsive.generate', false),
+            'adaptation' => config('mediable.adaptation.generate', false),
             'placeholder' => config('mediable.placeholder.generate', false),
         ];
         $this->manipulations = Manipulations::create();
@@ -138,22 +138,22 @@ class MediaConversion
         return MediaPlaceholder::create();
     }
 
-    public function getResponsive(int $width): MediaResponsive
+    public function getAdaptation(int $width): MediaAdaptation
     {
-        return MediaResponsive::create($width);
+        return MediaAdaptation::create($width);
     }
 
     /**
-     * @return array{responsive: bool, placeholder: bool}
+     * @return array{adaptation: bool, placeholder: bool}
      */
     public function getWith(): array
     {
         return $this->with;
     }
 
-    public function withResponsive(bool $responsive = true): self
+    public function withAdaptation(bool $adaptation = true): self
     {
-        $this->with['responsive'] = $responsive;
+        $this->with['adaptation'] = $adaptation;
 
         return $this;
     }
@@ -165,9 +165,9 @@ class MediaConversion
         return $this;
     }
 
-    public function withoutResponsive(): self
+    public function withoutAdaptation(): self
     {
-        $this->with['responsive'] = false;
+        $this->with['adaptation'] = false;
 
         return $this;
     }

@@ -38,9 +38,9 @@ return new class extends Migration
             $table->boolean('temporary')->index();
             $table->json('manipulations')->nullable();
             $table->json('conversions')->nullable();
-            $table->json('responsive')->nullable();
-            $table->json('properties')->nullable();
+            $table->json('adaptations')->nullable();
             $table->json('placeholders')->nullable();
+            $table->json('properties')->nullable();
 
             $table->order();
 

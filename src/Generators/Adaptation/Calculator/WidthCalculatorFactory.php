@@ -1,6 +1,6 @@
 <?php
 
-namespace Yuges\Mediable\Generators\Responsive\Calculator;
+namespace Yuges\Mediable\Generators\Adaptation\Calculator;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Yuges\Mediable\Generators\Responsive;
+namespace Yuges\Mediable\Generators\Adaptation;
 
 use Exception;
 use Yuges\Mediable\Image\ImageFactory;
@@ -10,7 +10,7 @@ use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Manipulations\Manipulations;
 use Symfony\Component\HttpFoundation\File\File;
 
-class DefaultResponsiveGenerator extends AbstractResponsiveGenerator
+class DefaultAdaptationGenerator extends AbstractResponsiveGenerator
 {
     public function generate(?MediaConversion $conversion = null): void
     {

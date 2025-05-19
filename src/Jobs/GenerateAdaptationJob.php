@@ -5,7 +5,7 @@ namespace Yuges\Mediable\Jobs;
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Generators\Responsive\ResponsiveGeneratorFactory;
 
-class GenerateResponsiveJob extends AbstractMediaJob
+class GenerateAdaptationJob extends AbstractMediaJob
 {
     public function __construct(
         public Media $media,

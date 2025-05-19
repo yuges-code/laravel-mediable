@@ -59,8 +59,8 @@ return [
         ],
         'generate' => false,
     ],
-    'responsive' => [
-        'job' => Yuges\Mediable\Jobs\GenerateResponsiveJob::class,
+    'adaptation' => [
+        'job' => Yuges\Mediable\Jobs\GenerateAdaptationJob::class,
         'queue' => [
             'default' => true,
             'commit' => 'after',
@@ -112,13 +112,13 @@ return [
                 // generators
             ],
         ],
-        'responsive' => [
-            'default' => Yuges\Mediable\Generators\Responsive\DefaultResponsiveGenerator::class,
+        'adaptation' => [
+            'default' => Yuges\Mediable\Generators\Adaptation\DefaultAdaptationGenerator::class,
             'custom' => [
                 // generators
             ],
             'calculator' => [
-                'default' => Yuges\Mediable\Generators\Responsive\Calculator\DefaultWidthCalculator::class,
+                'default' => Yuges\Mediable\Generators\Adaptation\Calculator\DefaultWidthCalculator::class,
                 'custom' => [
                     // generators
                 ],

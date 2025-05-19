@@ -1,11 +1,11 @@
 <?php
 
-namespace Yuges\Mediable\Generators\Responsive;
+namespace Yuges\Mediable\Generators\Adaptation;
 
 use Yuges\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Yuges\Mediable\Generators\Exceptions\InvalidResponsiveGenerator;
-use Yuges\Mediable\Generators\Responsive\Calculator\WidthCalculatorFactory;
+use Yuges\Mediable\Generators\Adaptation\Calculator\WidthCalculatorFactory;
 
 class ResponsiveGeneratorFactory
 {

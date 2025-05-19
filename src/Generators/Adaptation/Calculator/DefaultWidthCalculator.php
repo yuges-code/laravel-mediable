@@ -1,6 +1,6 @@
 <?php
 
-namespace Yuges\Mediable\Generators\Responsive\Calculator;
+namespace Yuges\Mediable\Generators\Adaptation\Calculator;
 
 use Exception;
 use Illuminate\Support\Collection;
@@ -12,7 +12,7 @@ class DefaultWidthCalculator extends AbstractWidthCalculator
     public function calculate(File $file): Collection
     {
         if ($this->coefficient <= 0 || $this->coefficient >= 1) {
-            return new Exception('Coefficient should be from 0 to 1');
+            throw new Exception('Coefficient should be from 0 to 1');
         }
 
         $image = ImageFactory::load($file->getPathname());
