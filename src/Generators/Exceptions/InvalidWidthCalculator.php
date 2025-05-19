@@ -3,7 +3,7 @@
 namespace Yuges\Mediable\Generators\Exceptions;
 
 use Exception;
-use Yuges\Mediable\Generators\Responsive\Calculator\WidthCalculator;
+use Yuges\Mediable\Generators\Adaptation\Calculator\WidthCalculator;
 
 class InvalidWidthCalculator extends Exception
 {

@@ -12,7 +12,7 @@ trait HasOptions
 
     protected ?array $manipulations = null;
 
-    protected bool $responsive = false;
+    protected bool $adaptation = false;
 
     protected ?string $collection = null;
 
@@ -53,9 +53,9 @@ trait HasOptions
         return $this;
     }
 
-    public function responsive(bool $responsive = true): self
+    public function adaptation(bool $adaptation = true): self
     {
-        $this->responsive = $responsive;
+        $this->adaptation = $adaptation;
 
         return $this;
     }

@@ -11,7 +11,7 @@ class DefaultNameGenerator extends AbstractNameGenerator
         return $this->media->filename . $this->separator . $conversion->getName() . '.' . $this->media->extension;
     }
 
-    public function getResponsiveFilename(MediaConversion $conversion, int $width): string
+    public function getAdaptationFilename(MediaConversion $conversion, int $width): string
     {
         return
             $this->media->filename .

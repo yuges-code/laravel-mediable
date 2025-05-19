@@ -18,9 +18,9 @@ class DefaultPathGenerator implements PathGenerator
         return $this->getDirectory($media) . '/conversions/';
     }
 
-    public function getPathToResponsive(Media $media): string
+    public function getPathToAdaptations(Media $media): string
     {
-        return $this->getDirectory($media) . '/responsive/';
+        return $this->getDirectory($media) . '/adaptations/';
     }
 
     protected function getDirectory(Media $media): string

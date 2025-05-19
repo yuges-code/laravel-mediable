@@ -21,12 +21,12 @@ class MediaAdaptation
 
     public function getFilename(Media $media, MediaConversion $conversion): string
     {
-        return NameGeneratorFactory::create($media)->getResponsiveFilename($conversion, $this->width);
+        return NameGeneratorFactory::create($media)->getAdaptationFilename($conversion, $this->width);
     }
 
     public function getPath(Media $media): string
     {
-        return PathGeneratorFactory::create($media)->getPathToResponsive($media);
+        return PathGeneratorFactory::create($media)->getPathToAdaptations($media);
     }
 
     public function getPathname(Media $media, MediaConversion $conversion): string

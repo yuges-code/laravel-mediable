@@ -10,5 +10,5 @@ interface PathGenerator
 
     public function getPathToConversions(Media $media): string;
 
-    public function getPathToResponsive(Media $media): string;
+    public function getPathToAdaptations(Media $media): string;
 }

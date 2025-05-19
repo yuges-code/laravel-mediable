@@ -13,5 +13,5 @@ interface NameGenerator
 
     public function getConversionFilename(MediaConversion $conversion): string;
 
-    public function getResponsiveFilename(MediaConversion $conversion, int $width): string;
+    public function getAdaptationFilename(MediaConversion $conversion, int $width): string;
 }

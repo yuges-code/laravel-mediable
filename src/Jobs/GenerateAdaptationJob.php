@@ -3,7 +3,7 @@
 namespace Yuges\Mediable\Jobs;
 
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Generators\Responsive\ResponsiveGeneratorFactory;
+use Yuges\Mediable\Generators\Adaptation\AdaptationGeneratorFactory;
 
 class GenerateAdaptationJob extends AbstractMediaJob
 {
@@ -14,6 +14,6 @@ class GenerateAdaptationJob extends AbstractMediaJob
 
     public function handle(): void
     {
-        ResponsiveGeneratorFactory::create($this->media)->generate();
+        AdaptationGeneratorFactory::create($this->media)->generate();
     }
 }
