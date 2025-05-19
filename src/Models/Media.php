@@ -9,9 +9,9 @@ use Yuges\Mediable\Traits\HasPath;
 use Yuges\Orderable\Traits\HasOrder;
 use Yuges\Mediable\Traits\HasMediable;
 use Illuminate\Support\Facades\Storage;
-use Yuges\Mediable\Traits\HasResponsive;
 use Yuges\Mediable\Traits\HasPlaceholder;
 use Yuges\Orderable\Options\OrderOptions;
+use Yuges\Mediable\Traits\HasAdaptations;
 use Yuges\Orderable\Interfaces\Orderable;
 use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\File\File;
@@ -39,7 +39,7 @@ class Media extends Model implements Orderable
         HasOrder,
         HasFactory,
         HasMediable,
-        HasResponsive,
+        HasAdaptations,
         HasPlaceholder;
 
     protected $table = 'media';

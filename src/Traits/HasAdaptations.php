@@ -5,35 +5,35 @@ namespace Yuges\Mediable\Traits;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
-use Yuges\Mediable\Responsive\MediaResponsive;
+use Yuges\Mediable\Adaptations\MediaAdaptation;
 
 /**
- * @property ?array $responsive
+ * @property ?array $adaptations
  */
-trait HasResponsive
+trait HasAdaptations
 {
-    protected function initializeHasResponsive()
+    protected function initializeHasAdaptations()
     {
         /** @var Model $this */
-        $this->mergeCasts(['responsive' => 'array']);
+        $this->mergeCasts(['adaptations' => 'array']);
     }
 
-    public function getResponsive(): ?array
+    public function getAdaptations(): ?array
     {
-        return $this->responsive;
+        return $this->adaptations;
     }
 
     public function getSrcset(string $conversion = 'original'): Collection
     {
-        $collection = new Collection($this->responsive[$conversion] ?? null);
+        $collection = new Collection($this->adaptations[$conversion] ?? null);
 
         return $collection->map(function (string $filename, int $width) use ($conversion) {
-            $responsive = MediaResponsive::create($width);
+            $adaptation = MediaAdaptation::create($width);
 
             return [
                 'width' => $width,
                 'url' => Storage::disk($this->disk)->url(
-                    $responsive->getPath($this) . $filename
+                    $adaptation->getPath($this) . $filename
                 ),
             ];
         });

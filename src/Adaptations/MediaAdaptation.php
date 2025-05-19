@@ -1,13 +1,13 @@
 <?php
 
-namespace Yuges\Mediable\Responsive;
+namespace Yuges\Mediable\Adaptations;
 
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Conversions\MediaConversion;
 use Yuges\Mediable\Generators\Name\NameGeneratorFactory;
 use Yuges\Mediable\Generators\Path\PathGeneratorFactory;
 
-class MediaResponsive
+class MediaAdaptation
 {
     public function __construct(
         protected int $width,
@@ -38,11 +38,11 @@ class MediaResponsive
     {
         $media->refresh();
 
-        $responsive = $media->responsive ?? [];
+        $adaptations = $media->adaptations ?? [];
 
-        $responsive[$conversion->getName()][$this->width] = pathinfo($file, PATHINFO_BASENAME);
+        $adaptations[$conversion->getName()][$this->width] = pathinfo($file, PATHINFO_BASENAME);
 
-        $media->responsive = $responsive;
+        $media->adaptations = $adaptations;
 
         $media->save();
     }
