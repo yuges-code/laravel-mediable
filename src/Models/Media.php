@@ -54,10 +54,8 @@ class Media extends Model implements Orderable
     protected function casts(): array
     {
         return [
-            'responsive' => 'array',
             'properties' => 'array',
             'conversions' => 'array',
-            'placeholders' => 'array',
             'manipulations' => 'array',
             'temporary' => 'boolean',
         ];

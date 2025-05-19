@@ -4,6 +4,7 @@ namespace Yuges\Mediable\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 use Yuges\Mediable\Responsive\MediaResponsive;
 
 /**
@@ -11,6 +12,12 @@ use Yuges\Mediable\Responsive\MediaResponsive;
  */
 trait HasResponsive
 {
+    protected function initializeHasResponsive()
+    {
+        /** @var Model $this */
+        $this->mergeCasts(['responsive' => 'array']);
+    }
+
     public function getResponsive(): ?array
     {
         return $this->responsive;
