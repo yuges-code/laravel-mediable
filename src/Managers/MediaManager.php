@@ -4,7 +4,7 @@ namespace Yuges\Mediable\Managers;
 
 use Exception;
 use Yuges\Mediable\Models\Media;
-use Yuges\Mediable\Traits\HasConfig;
+use Yuges\Mediable\Config\Config;
 use Yuges\Mediable\Traits\HasOptions;
 use Yuges\Mediable\Interfaces\Mediable;
 use Symfony\Component\HttpFoundation\File\File;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaManager
 {
-    use HasConfig, HasOptions;
+    use HasOptions;
 
     protected ?Mediable $model = null;
 
@@ -28,6 +28,13 @@ class MediaManager
         $this->model = $model;
 
         return $this;
+    }
+
+    public static function createMedia(): Media
+    {
+        $class = Config::getMediaClass();
+
+        return new $class;
     }
 
     public function setFile(string|UploadedFile $file): self

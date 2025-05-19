@@ -2,6 +2,7 @@
 
 namespace Yuges\Mediable\Config;
 
+use Yuges\Mediable\Models\Media;
 use Yuges\Package\Enums\KeyType;
 use Illuminate\Support\Collection;
 use Yuges\Mediable\Interfaces\Mediable;
