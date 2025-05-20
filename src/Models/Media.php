@@ -11,6 +11,7 @@ use Yuges\Mediable\Traits\HasMediable;
 use Illuminate\Support\Facades\Storage;
 use Yuges\Mediable\Traits\HasPlaceholder;
 use Yuges\Orderable\Options\OrderOptions;
+use Yuges\Mediable\Traits\HasConversions;
 use Yuges\Mediable\Traits\HasAdaptations;
 use Yuges\Orderable\Interfaces\Orderable;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,7 +29,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property integer $size
  * @property boolean $temporary
  * @property ?array $manipulations
- * @property ?array $conversions
  * @property ?array $properties
  */
 class Media extends Model implements Orderable
@@ -39,6 +39,7 @@ class Media extends Model implements Orderable
         HasOrder,
         HasFactory,
         HasMediable,
+        HasConversions,
         HasAdaptations,
         HasPlaceholder;
 
@@ -55,7 +56,6 @@ class Media extends Model implements Orderable
     {
         return [
             'properties' => 'array',
-            'conversions' => 'array',
             'manipulations' => 'array',
             'temporary' => 'boolean',
         ];
