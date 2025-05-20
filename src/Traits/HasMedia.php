@@ -4,6 +4,7 @@ namespace Yuges\Mediable\Traits;
 
 use Yuges\Mediable\Models\Media;
 use Yuges\Mediable\Config\Config;
+use Illuminate\Database\Eloquent\Model;
 use Yuges\Mediable\Managers\MediaManager;
 use Yuges\Mediable\Observers\MediableObserver;
 use Yuges\Mediable\Collections\MediaCollection;
@@ -34,7 +35,12 @@ trait HasMedia
 
     public function media(): MorphMany
     {
-        return $this->morphMany(Media::class, 'mediable');
+        /** @var Model $this */
+        return $this
+            ->morphMany(
+                Config::getMediaClass(Media::class),
+                Config::getMediableRelationName('mediable')
+            );
     }
 
     public function addMedia(string|UploadedFile $file): MediaManager
