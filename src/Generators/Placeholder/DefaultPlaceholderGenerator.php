@@ -16,7 +16,7 @@ class DefaultPlaceholderGenerator implements PlaceholderGenerator
         $conversion = $conversion ?? MediaConversion::create('original');
 
         $image = ImageFactory::load(
-            Storage::disk($media->disk)->path($media->getPathname())
+            Storage::disk($media->disk)->path($conversion->getPathname($media))
         );
         $size = $image->getSize();
 
