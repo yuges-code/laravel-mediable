@@ -15,7 +15,8 @@ class MediableObserver
         }
 
         if (in_array(SoftDeletes::class, class_uses_recursive($model))) {
-            if (! $model->forceDeleting) {
+            /** @var SoftDeletes $model */
+            if (! $model->isForceDeleting()) {
                 return;
             }
         }
