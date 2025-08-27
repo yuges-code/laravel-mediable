@@ -8,8 +8,8 @@ use Yuges\Mediable\Interfaces\Mediable;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property string $mediable_id
- * @property int|string $mediable_type
+ * @property string $mediable_type
+ * @property int|string $mediable_id
  * 
  * @property ?Mediable $mediable
  */
